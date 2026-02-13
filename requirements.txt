@@ -1,7 +1,10 @@
-streamlit>=1.31
-gspread>=6.0
-google-auth>=2.0
-pandas>=2.0
-openpyxl>=3.1
-reportlab>=4.0
-streamlit-drawable-canvas>=0.9.3
+streamlit
+gspread
+google-auth
+google-auth-oauthlib
+pandas
+openpyxl
+reportlab
+Pillow
+numpy
+streamlit-drawable-canvas
