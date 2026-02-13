@@ -35,46 +35,33 @@ def _file_to_b64(path: str) -> Optional[str]:
         return None
 
 def set_bg_and_branding():
-    fondo_b64 = _file_to_b64("fondo.png")
-    logo_b64 = _file_to_b64("logo.png")
+    def safe_b64(path: str):
+        try:
+            with open(path, "rb") as f:
+                return base64.b64encode(f.read()).decode("utf-8")
+        except Exception:
+            return None
 
-    css = """
+    fondo_b64 = safe_b64("fondo.png")
+    st.markdown("""
     <style>
       .block-container { padding-top: 1.2rem; padding-bottom: 2rem; }
       .stButton>button { border-radius: 10px; padding: 0.55rem 0.9rem; }
       .stTextInput>div>div>input { border-radius: 10px; }
       .stSelectbox>div>div { border-radius: 10px; }
       .stTextArea textarea { border-radius: 10px; }
-      .card {
-          background: rgba(255,255,255,0.88);
-          border: 1px solid rgba(0,0,0,0.06);
-          border-radius: 16px;
-          padding: 16px;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-      }
+      .card { background: rgba(255,255,255,0.88); border: 1px solid rgba(0,0,0,0.06);
+              border-radius: 16px; padding: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
       .muted { color: rgba(0,0,0,0.6); font-size: 0.9rem; }
       .title { font-size: 1.35rem; font-weight: 700; }
-      .subtitle { font-size: 1.05rem; font-weight: 600; margin-top: 0.4rem; }
-      .pill {
-          display: inline-block;
-          padding: 6px 10px;
-          border-radius: 999px;
-          background: rgba(0,0,0,0.05);
-          font-size: 0.85rem;
-          margin-right: 6px;
-      }
       .hr { height: 1px; background: rgba(0,0,0,0.08); margin: 14px 0; }
-      .sigbox {
-          background: rgba(255,255,255,0.95);
-          border: 1px dashed rgba(0,0,0,0.25);
-          border-radius: 14px;
-          padding: 12px;
-      }
+      .sigbox { background: rgba(255,255,255,0.95); border: 1px dashed rgba(0,0,0,0.25);
+                border-radius: 14px; padding: 12px; }
     </style>
-    """
+    """, unsafe_allow_html=True)
 
     if fondo_b64:
-        css += f"""
+        st.markdown(f"""
         <style>
           .stApp {{
             background-image: url("data:image/png;base64,{fondo_b64}");
@@ -83,20 +70,16 @@ def set_bg_and_branding():
             background-attachment: fixed;
           }}
         </style>
-        """
+        """, unsafe_allow_html=True)
 
-    st.markdown(css, unsafe_allow_html=True)
-
-    # header
+    # Header con logo
     col1, col2 = st.columns([1, 5])
     with col1:
-        if logo_b64:
+        if os.path.exists("logo.png"):
             st.image("logo.png", width=120)
     with col2:
         st.markdown('<div class="title">Checklist de Equipos</div>', unsafe_allow_html=True)
         st.markdown('<div class="muted">Operador llena • Supervisor revisa y aprueba • PDF final con firmas</div>', unsafe_allow_html=True)
-
-set_bg_and_branding()
 
 
 # =========================
