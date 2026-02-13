@@ -18,15 +18,21 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 
 
-# =========================
-# STREAMLIT CONFIG
-# =========================
+# =========================================================
+# Streamlit config
+# =========================================================
 st.set_page_config(page_title="Checklist Equipos", page_icon="✅", layout="wide")
 
 
-# =========================
-# BRAND / CSS (RESPONSIVE + LEGIBLE)
-# =========================
+# =========================================================
+# Helpers
+# =========================================================
+def _now_iso() -> str:
+    return datetime.now().isoformat(timespec="seconds")
+
+def _today_iso() -> str:
+    return date.today().isoformat()
+
 def _safe_b64(path: str) -> Optional[str]:
     try:
         with open(path, "rb") as f:
@@ -34,82 +40,151 @@ def _safe_b64(path: str) -> Optional[str]:
     except Exception:
         return None
 
-def inject_css():
+def hash_password(pw: str) -> str:
+    return hashlib.sha256(pw.encode("utf-8")).hexdigest()
+
+def b64_to_bytes(b64str: str) -> bytes:
+    return base64.b64decode(b64str.encode("utf-8"))
+
+
+# =========================================================
+# CSS / Branding (incluye arreglo franja blanca)
+# =========================================================
+def inject_css(is_login: bool):
     fondo_b64 = _safe_b64("fondo.png")
-    st.markdown("""
+
+    # Nota: is_login permite esconder elementos cuando toca login
+    st.markdown(f"""
     <style>
-      .block-container { padding-top: 1.2rem; padding-bottom: 2.2rem; max-width: 1200px; }
-      [data-testid="stSidebar"] { background: rgba(255,255,255,0.92); }
+      .block-container {{
+        padding-top: 1.2rem;
+        padding-bottom: 2.2rem;
+        max-width: 1200px;
+        position: relative;
+        z-index: 1;
+      }}
+
+      /* Sidebar */
+      [data-testid="stSidebar"] {{
+        background: rgba(255,255,255,0.92);
+        position: relative;
+        z-index: 1;
+      }}
 
       /* Hide Streamlit chrome */
-      #MainMenu {visibility: hidden;}
-      footer {visibility: hidden;}
-      header {visibility: hidden;}
+      #MainMenu {{visibility: hidden;}}
+      footer {{visibility: hidden;}}
+      header {{visibility: hidden;}}
 
-      .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {
+      /* Inputs */
+      .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {{
         border-radius: 12px !important;
-      }
-      .stButton > button {
+      }}
+      .stButton > button {{
         border-radius: 12px;
         padding: 0.65rem 1rem;
         font-weight: 650;
-      }
+      }}
 
-      .card {
+      /* Cards */
+      .card {{
         background: rgba(255,255,255,0.94);
         border: 1px solid rgba(0,0,0,0.08);
         border-radius: 18px;
         padding: 18px;
         box-shadow: 0 12px 34px rgba(0,0,0,0.10);
-      }
+      }}
 
-      .title { font-size: 1.35rem; font-weight: 900; margin: 0; }
-      .muted { color: rgba(0,0,0,0.62); font-size: 0.92rem; margin: 0.25rem 0 0.1rem 0; }
-      .hr { height: 1px; background: rgba(0,0,0,0.10); margin: 14px 0; }
-
-      .pill {
+      .title {{
+        font-size: 1.35rem;
+        font-weight: 900;
+        margin: 0;
+      }}
+      .muted {{
+        color: rgba(0,0,0,0.62);
+        font-size: 0.92rem;
+        margin: 0.25rem 0 0.1rem 0;
+      }}
+      .hr {{
+        height: 1px;
+        background: rgba(0,0,0,0.10);
+        margin: 14px 0;
+      }}
+      .pill {{
         display: inline-block;
         padding: 6px 10px;
         border-radius: 999px;
         background: rgba(0,0,0,0.05);
         font-size: 0.85rem;
         margin-right: 6px;
-      }
+      }}
 
-      /* Login centered overlay */
-      .login-overlay{
-        position: fixed; inset: 0;
-        background: rgba(0,0,0,0.35);
-        z-index: 998;
-      }
-      .login-wrap{
-        position: fixed; inset: 0;
-        display: flex; justify-content: center; align-items: center;
+      /* Signature box */
+      .sigbox {{
+        background: rgba(255,255,255,0.98);
+        border: 1px dashed rgba(0,0,0,0.25);
+        border-radius: 14px;
+        padding: 12px;
+      }}
+
+      /* LOGIN overlay (centro real + no franja) */
+      .login-overlay {{
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.38);
+        z-index: 9998;
+        pointer-events: none;
+      }}
+
+      .login-wrap {{
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 18px;
-        z-index: 999;
-      }
-      .login-card{
-        width: min(520px, 94vw);
+        z-index: 9999;
+      }}
+
+      .login-card {{
+        width: min(560px, 94vw);
         background: rgba(255,255,255,0.96);
         border: 1px solid rgba(0,0,0,0.10);
         border-radius: 20px;
         padding: 22px;
         box-shadow: 0 18px 45px rgba(0,0,0,0.25);
-      }
-      .brand-row{ display:flex; gap:12px; align-items:center; margin-bottom:10px; }
-      .brand-title{ font-size:1.45rem; font-weight: 950; margin:0; }
-      .brand-sub{ margin:0; color: rgba(0,0,0,0.62); font-size:0.95rem; }
-      @media (max-width: 640px){
-        .login-card{ padding: 16px; border-radius: 16px; }
-        .brand-title{ font-size:1.25rem; }
-      }
+      }}
 
-      .sigbox {
-        background: rgba(255,255,255,0.98);
-        border: 1px dashed rgba(0,0,0,0.25);
-        border-radius: 14px;
-        padding: 12px;
-      }
+      .brand-row {{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 10px;
+      }}
+      .brand-title {{
+        font-size: 1.45rem;
+        font-weight: 950;
+        margin: 0;
+      }}
+      .brand-sub {{
+        margin: 0;
+        color: rgba(0,0,0,0.62);
+        font-size: 0.95rem;
+      }}
+      @media (max-width: 640px) {{
+        .login-card {{
+          padding: 16px;
+          border-radius: 16px;
+        }}
+        .brand-title {{
+          font-size: 1.25rem;
+        }}
+      }}
+
+      /* Esto evita “bloques fantasmas” debajo en login */
+      {"[data-testid='stAppViewContainer']{overflow:hidden !important;}" if is_login else ""}
+
+      /* Fondo */
     </style>
     """, unsafe_allow_html=True)
 
@@ -122,23 +197,17 @@ def inject_css():
             background-position: center;
             background-attachment: fixed;
           }}
-          /* overlay suave para que se lea */
           .stApp::before {{
             content: "";
             position: fixed;
             inset: 0;
-            background: rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.30);
             pointer-events: none;
             z-index: 0;
-          }}
-          .block-container, [data-testid="stSidebar"] {{
-            position: relative;
-            z-index: 1;
           }}
         </style>
         """, unsafe_allow_html=True)
 
-inject_css()
 
 def show_top_header():
     col1, col2 = st.columns([1, 6])
@@ -150,9 +219,9 @@ def show_top_header():
         st.markdown('<p class="muted">Operador llena • Supervisor revisa y aprueba • PDF final con firmas</p>', unsafe_allow_html=True)
 
 
-# =========================
-# GOOGLE AUTH
-# =========================
+# =========================================================
+# Google Sheets
+# =========================================================
 def get_gsheet_client() -> gspread.Client:
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
@@ -172,152 +241,9 @@ def get_sheet_id() -> str:
     if not sid:
         sid = os.environ.get("GSHEET_ID")
     if not sid:
-        raise RuntimeError("Falta GSHEET_ID en Secrets.")
+        raise RuntimeError("Falta GSHEET_ID en Secrets o variable de entorno.")
     return sid
 
-
-# =========================
-# CONFIG JSON (ROBUSTO)
-# =========================
-def load_json_any(path: str) -> Any:
-    if not os.path.exists(path):
-        raise RuntimeError(f"No encuentro {path} en la raíz del repo.")
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-RAW_CONFIG = load_json_any("checklist_config.json")
-
-def _as_list(x):
-    if x is None:
-        return []
-    if isinstance(x, list):
-        return x
-    return [x]
-
-def _first_key(d: dict, keys: List[str]):
-    for k in keys:
-        if k in d and d[k] is not None:
-            return d[k]
-    return None
-
-def normalize_config(raw: Any) -> Dict[str, Any]:
-    """
-    Convierte cualquier estructura típica a:
-    {
-      "equipos":[
-        {"nombre":"...", "items":[{"id":"I1","texto":"..."}, ...]},
-        ...
-      ]
-    }
-    Acepta claves comunes:
-    - equipos/equipment/unidades
-    - checklist/preguntas/items/criterios
-    - nombre/name/equipo/unidad
-    """
-    # Si ya viene bien
-    if isinstance(raw, dict) and isinstance(raw.get("equipos"), list):
-        # normaliza items internos
-        equipos_out = []
-        for e in raw["equipos"]:
-            if not isinstance(e, dict):
-                continue
-            nombre = _first_key(e, ["nombre", "name", "equipo", "unidad", "id_equipo", "codigo"]) or "SIN_NOMBRE"
-            items_raw = _first_key(e, ["items", "checklist", "preguntas", "criterios", "lista", "campos"]) or []
-            items_out = []
-            for idx, it in enumerate(_as_list(items_raw)):
-                if isinstance(it, dict):
-                    texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name", "label"]) or f"Item {idx+1}"
-                    iid = _first_key(it, ["id", "item_id", "codigo"]) or f"I{idx+1}"
-                else:
-                    texto = str(it)
-                    iid = f"I{idx+1}"
-                items_out.append({"id": str(iid), "texto": str(texto)})
-            equipos_out.append({"nombre": str(nombre), "items": items_out})
-        return {"equipos": equipos_out}
-
-    # Si es dict pero con otra clave para equipos
-    if isinstance(raw, dict):
-        equipos_raw = _first_key(raw, ["equipos", "equipment", "unidades", "maquinas", "activos"])
-        if equipos_raw is None:
-            # a veces vienen como dict {"Apilador #01": [...preguntas...], ...}
-            if all(isinstance(v, (list, dict)) for v in raw.values()) and len(raw.keys()) > 0:
-                equipos_out = []
-                for k, v in raw.items():
-                    nombre = str(k)
-                    items_raw = v
-                    # si v es dict con items
-                    if isinstance(v, dict):
-                        items_raw = _first_key(v, ["items", "checklist", "preguntas", "criterios", "lista", "campos"]) or v
-                    items_out = []
-                    for idx, it in enumerate(_as_list(items_raw)):
-                        if isinstance(it, dict):
-                            texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name", "label"]) or f"Item {idx+1}"
-                            iid = _first_key(it, ["id", "item_id", "codigo"]) or f"I{idx+1}"
-                        else:
-                            texto = str(it)
-                            iid = f"I{idx+1}"
-                        items_out.append({"id": str(iid), "texto": str(texto)})
-                    equipos_out.append({"nombre": nombre, "items": items_out})
-                return {"equipos": equipos_out}
-
-            return {"equipos": []}
-
-        equipos_out = []
-        for e in _as_list(equipos_raw):
-            if isinstance(e, dict):
-                nombre = _first_key(e, ["nombre", "name", "equipo", "unidad", "id_equipo", "codigo"]) or "SIN_NOMBRE"
-                items_raw = _first_key(e, ["items", "checklist", "preguntas", "criterios", "lista", "campos"]) or []
-            else:
-                nombre = str(e)
-                items_raw = []
-            items_out = []
-            for idx, it in enumerate(_as_list(items_raw)):
-                if isinstance(it, dict):
-                    texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name", "label"]) or f"Item {idx+1}"
-                    iid = _first_key(it, ["id", "item_id", "codigo"]) or f"I{idx+1}"
-                else:
-                    texto = str(it)
-                    iid = f"I{idx+1}"
-                items_out.append({"id": str(iid), "texto": str(texto)})
-            equipos_out.append({"nombre": str(nombre), "items": items_out})
-        return {"equipos": equipos_out}
-
-    # Si es lista (lista de equipos)
-    if isinstance(raw, list):
-        equipos_out = []
-        for e in raw:
-            if isinstance(e, dict):
-                nombre = _first_key(e, ["nombre", "name", "equipo", "unidad"]) or "SIN_NOMBRE"
-                items_raw = _first_key(e, ["items", "checklist", "preguntas"]) or []
-                items_out = []
-                for idx, it in enumerate(_as_list(items_raw)):
-                    if isinstance(it, dict):
-                        texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name"]) or f"Item {idx+1}"
-                        iid = _first_key(it, ["id", "item_id"]) or f"I{idx+1}"
-                    else:
-                        texto = str(it)
-                        iid = f"I{idx+1}"
-                    items_out.append({"id": str(iid), "texto": str(texto)})
-                equipos_out.append({"nombre": str(nombre), "items": items_out})
-        return {"equipos": equipos_out}
-
-    return {"equipos": []}
-
-CONFIG = normalize_config(RAW_CONFIG)
-
-def list_equipos() -> List[str]:
-    return [e.get("nombre", "SIN_NOMBRE") for e in CONFIG.get("equipos", [])]
-
-def get_items_for_equipo(nombre_equipo: str) -> List[Dict[str, Any]]:
-    for e in CONFIG.get("equipos", []):
-        if e.get("nombre") == nombre_equipo:
-            return e.get("items", [])
-    return []
-
-
-# =========================
-# DB / SHEETS
-# =========================
 SHEETS = {
     "users": "users",
     "submissions": "submissions",
@@ -325,12 +251,6 @@ SHEETS = {
     "approvals": "approvals",
     "photos": "photos",
 }
-
-def _now_iso() -> str:
-    return datetime.now().isoformat(timespec="seconds")
-
-def _today_iso() -> str:
-    return date.today().isoformat()
 
 def ensure_worksheets(sh: gspread.Spreadsheet):
     def _ensure(name: str, headers: List[str]):
@@ -409,12 +329,9 @@ def ws_delete_row_by_key(ws: gspread.Worksheet, key_col: str, key_val: str) -> b
     return False
 
 
-# =========================
-# AUTH
-# =========================
-def hash_password(pw: str) -> str:
-    return hashlib.sha256(pw.encode("utf-8")).hexdigest()
-
+# =========================================================
+# Auth (con recuperación admin opcional)
+# =========================================================
 def get_user(username: str) -> Optional[Dict[str, Any]]:
     _, wss = get_db()
     for u in ws_all_records(wss["users"]):
@@ -422,12 +339,33 @@ def get_user(username: str) -> Optional[Dict[str, Any]]:
             return u
     return None
 
-def ensure_admin_seed():
+def ensure_admin_seed_and_optional_reset():
+    """
+    - Si users está vacío: crea admin/admin123.
+    - Si pones en Secrets: ADMIN_RESET_PASSWORD = "algo"
+      entonces fuerza el password de admin a ese valor (sin borrar usuarios).
+    """
     _, wss = get_db()
     users = ws_all_records(wss["users"])
-    if users:
+
+    # Seed si vacío
+    if not users:
+        ws_append(wss["users"], ["admin", hash_password("admin123"), "supervisor", "Administrador", True, _now_iso()])
         return
-    ws_append(wss["users"], ["admin", hash_password("admin123"), "supervisor", "Administrador", True, _now_iso()])
+
+    # Reset opcional por secrets
+    reset_pw = None
+    try:
+        reset_pw = st.secrets.get("ADMIN_RESET_PASSWORD")
+    except Exception:
+        reset_pw = None
+
+    if reset_pw:
+        # actualiza admin (si existe)
+        ok = ws_update_row_by_key(wss["users"], "username", "admin", {"password_hash": hash_password(reset_pw), "is_active": True})
+        if not ok:
+            # si no existiera admin, lo creamos
+            ws_append(wss["users"], ["admin", hash_password(reset_pw), "supervisor", "Administrador", True, _now_iso()])
 
 def authenticate(username: str, password: str) -> Optional[Dict[str, Any]]:
     u = get_user(username)
@@ -440,230 +378,137 @@ def authenticate(username: str, password: str) -> Optional[Dict[str, Any]]:
     return u
 
 
-# =========================
-# SUBMISSIONS + PDF
-# =========================
-def make_submission_id() -> str:
-    import random, string
-    return f"S{datetime.now().strftime('%Y%m%d%H%M%S')}{''.join(random.choices(string.ascii_uppercase+string.digits,k=4))}"
+# =========================================================
+# Config JSON (equipos/preguntas) - robusto
+# =========================================================
+def load_json_any(path: str) -> Any:
+    if not os.path.exists(path):
+        raise RuntimeError(f"No encuentro {path} en la raíz del repo.")
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-def create_submission(equipo: str, operador: Dict[str, Any], estado_general: str, nota: str, firma_b64: str) -> str:
-    _, wss = get_db()
-    sid = make_submission_id()
-    ws_append(wss["submissions"], [
-        sid, _today_iso(), _now_iso(), equipo,
-        operador["username"], operador.get("full_name", ""),
-        estado_general, nota, firma_b64, "PENDIENTE", _now_iso()
-    ])
-    return sid
+RAW_CONFIG = load_json_any("checklist_config.json")
 
-def upsert_submission_items(submission_id: str, items_rows: List[List[Any]]):
-    _, wss = get_db()
-    ws = wss["submission_items"]
-    data = ws.get_all_values()
-    if len(data) >= 2:
-        headers = data[0]
-        sid_idx = headers.index("submission_id")
-        rows_to_delete = [i + 1 for i in range(1, len(data)) if str(data[i][sid_idx]).strip() == submission_id]
-        for r in reversed(rows_to_delete):
-            ws.delete_rows(r)
-    for row in items_rows:
-        ws_append(ws, row)
+def _as_list(x):
+    if x is None:
+        return []
+    if isinstance(x, list):
+        return x
+    return [x]
 
-def upsert_photos(submission_id: str, photos_rows: List[List[Any]]):
-    _, wss = get_db()
-    ws = wss["photos"]
-    data = ws.get_all_values()
-    if len(data) >= 2:
-        headers = data[0]
-        sid_idx = headers.index("submission_id")
-        rows_to_delete = [i + 1 for i in range(1, len(data)) if str(data[i][sid_idx]).strip() == submission_id]
-        for r in reversed(rows_to_delete):
-            ws.delete_rows(r)
-    for row in photos_rows:
-        ws_append(ws, row)
+def _first_key(d: dict, keys: List[str]):
+    for k in keys:
+        if k in d and d[k] is not None:
+            return d[k]
+    return None
 
-def list_pending_submissions() -> pd.DataFrame:
-    _, wss = get_db()
-    df = pd.DataFrame(ws_all_records(wss["submissions"]))
-    if df.empty:
-        return df
-    df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
-    df = df.sort_values("created_at", ascending=False)
-    return df[df["status"].astype(str).str.upper().isin(["PENDIENTE"])]
+def normalize_config(raw: Any) -> Dict[str, Any]:
+    """
+    Normaliza a:
+    { "equipos": [ {"nombre": "...", "items": [{"id":"I1","texto":"..."}, ...]}, ... ] }
+    """
+    # Caso ideal
+    if isinstance(raw, dict) and isinstance(raw.get("equipos"), list):
+        equipos_out = []
+        for e in raw["equipos"]:
+            if not isinstance(e, dict):
+                continue
+            nombre = _first_key(e, ["nombre","name","equipo","unidad","codigo"]) or "SIN_NOMBRE"
+            items_raw = _first_key(e, ["items","checklist","preguntas","criterios","lista","campos"]) or []
+            items_out = []
+            for idx, it in enumerate(_as_list(items_raw)):
+                if isinstance(it, dict):
+                    texto = _first_key(it, ["texto","item","pregunta","descripcion","name","label"]) or f"Item {idx+1}"
+                    iid = _first_key(it, ["id","item_id","codigo"]) or f"I{idx+1}"
+                else:
+                    texto = str(it)
+                    iid = f"I{idx+1}"
+                items_out.append({"id": str(iid), "texto": str(texto)})
+            equipos_out.append({"nombre": str(nombre), "items": items_out})
+        return {"equipos": equipos_out}
 
-def list_all_submissions() -> pd.DataFrame:
-    _, wss = get_db()
-    df = pd.DataFrame(ws_all_records(wss["submissions"]))
-    if df.empty:
-        return df
-    df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
-    return df.sort_values("created_at", ascending=False)
+    # Caso dict con otra llave para equipos
+    if isinstance(raw, dict):
+        equipos_raw = _first_key(raw, ["equipos","equipment","unidades","maquinas","activos"])
+        if equipos_raw is not None:
+            equipos_out = []
+            for e in _as_list(equipos_raw):
+                if isinstance(e, dict):
+                    nombre = _first_key(e, ["nombre","name","equipo","unidad","codigo"]) or "SIN_NOMBRE"
+                    items_raw = _first_key(e, ["items","checklist","preguntas","criterios","lista","campos"]) or []
+                else:
+                    nombre = str(e)
+                    items_raw = []
+                items_out = []
+                for idx, it in enumerate(_as_list(items_raw)):
+                    if isinstance(it, dict):
+                        texto = _first_key(it, ["texto","item","pregunta","descripcion","name","label"]) or f"Item {idx+1}"
+                        iid = _first_key(it, ["id","item_id","codigo"]) or f"I{idx+1}"
+                    else:
+                        texto = str(it)
+                        iid = f"I{idx+1}"
+                    items_out.append({"id": str(iid), "texto": str(texto)})
+                equipos_out.append({"nombre": str(nombre), "items": items_out})
+            return {"equipos": equipos_out}
 
-def get_submission_detail(submission_id: str):
-    _, wss = get_db()
-    subs = ws_all_records(wss["submissions"])
-    sub = next((s for s in subs if str(s.get("submission_id")) == submission_id), None)
+        # Caso: {"Apilador 1":[...preguntas...], "Apilador 2":[...]}
+        if all(isinstance(v, (list, dict)) for v in raw.values()) and len(raw.keys()) > 0:
+            equipos_out = []
+            for k, v in raw.items():
+                nombre = str(k)
+                items_raw = v
+                if isinstance(v, dict):
+                    items_raw = _first_key(v, ["items","checklist","preguntas","criterios","lista","campos"]) or v
+                items_out = []
+                for idx, it in enumerate(_as_list(items_raw)):
+                    if isinstance(it, dict):
+                        texto = _first_key(it, ["texto","item","pregunta","descripcion","name","label"]) or f"Item {idx+1}"
+                        iid = _first_key(it, ["id","item_id","codigo"]) or f"I{idx+1}"
+                    else:
+                        texto = str(it)
+                        iid = f"I{idx+1}"
+                    items_out.append({"id": str(iid), "texto": str(texto)})
+                equipos_out.append({"nombre": nombre, "items": items_out})
+            return {"equipos": equipos_out}
 
-    items = ws_all_records(wss["submission_items"])
-    df_items = pd.DataFrame([i for i in items if str(i.get("submission_id")) == submission_id])
+        return {"equipos": []}
 
-    photos = ws_all_records(wss["photos"])
-    df_photos = pd.DataFrame([p for p in photos if str(p.get("submission_id")) == submission_id])
+    # Caso lista de equipos
+    if isinstance(raw, list):
+        equipos_out = []
+        for e in raw:
+            if isinstance(e, dict):
+                nombre = _first_key(e, ["nombre","name","equipo","unidad","codigo"]) or "SIN_NOMBRE"
+                items_raw = _first_key(e, ["items","checklist","preguntas","criterios","lista","campos"]) or []
+                items_out = []
+                for idx, it in enumerate(_as_list(items_raw)):
+                    if isinstance(it, dict):
+                        texto = _first_key(it, ["texto","item","pregunta","descripcion","name","label"]) or f"Item {idx+1}"
+                        iid = _first_key(it, ["id","item_id","codigo"]) or f"I{idx+1}"
+                    else:
+                        texto = str(it)
+                        iid = f"I{idx+1}"
+                    items_out.append({"id": str(iid), "texto": str(texto)})
+                equipos_out.append({"nombre": str(nombre), "items": items_out})
+        return {"equipos": equipos_out}
 
-    approvals = ws_all_records(wss["approvals"])
-    appr = next((a for a in approvals if str(a.get("submission_id")) == submission_id), None)
+    return {"equipos": []}
 
-    return sub, df_items, df_photos, appr
+CONFIG = normalize_config(RAW_CONFIG)
 
-def b64_to_bytes(b64str: str) -> bytes:
-    return base64.b64decode(b64str.encode("utf-8"))
+def list_equipos() -> List[str]:
+    return [e.get("nombre","SIN_NOMBRE") for e in CONFIG.get("equipos", [])]
 
-def make_pdf_bytes(sub: Dict[str, Any], df_items: pd.DataFrame, df_photos: pd.DataFrame, appr: Dict[str, Any]) -> bytes:
-    buf = io.BytesIO()
-    c = canvas.Canvas(buf, pagesize=A4)
-    width, height = A4
-
-    y = height - 2.0 * cm
-    c.setFont("Helvetica-Bold", 14)
-    c.drawString(2.0 * cm, y, "Checklist de Equipos - Reporte Aprobado")
-    y -= 0.8 * cm
-
-    c.setFont("Helvetica", 10)
-    c.drawString(2.0 * cm, y, f"Equipo: {sub.get('equipo','')}")
-    y -= 0.5 * cm
-    c.drawString(2.0 * cm, y, f"Fecha: {sub.get('date','')}  |  Creado: {sub.get('created_at','')}")
-    y -= 0.5 * cm
-    c.drawString(2.0 * cm, y, f"Operador: {sub.get('operador_full_name','')} ({sub.get('operador_username','')})")
-    y -= 0.5 * cm
-    c.drawString(2.0 * cm, y, f"Estado general: {sub.get('estado_general','')}")
-    y -= 0.7 * cm
-
-    c.setFont("Helvetica-Bold", 11)
-    c.drawString(2.0 * cm, y, "Detalle de ítems")
-    y -= 0.5 * cm
-    c.setFont("Helvetica", 9)
-
-    for _, row in df_items.fillna("").iterrows():
-        line = f"- {row.get('item_text','')} | Estado: {row.get('estado','')} | Coment: {str(row.get('comentario',''))[:60]}"
-        if y < 4.0 * cm:
-            c.showPage()
-            y = height - 2.0 * cm
-            c.setFont("Helvetica", 9)
-        c.drawString(2.0 * cm, y, line[:140])
-        y -= 0.35 * cm
-
-    if y < 8.0 * cm:
-        c.showPage()
-        y = height - 2.0 * cm
-
-    c.setFont("Helvetica-Bold", 11)
-    c.drawString(2.0 * cm, y, "Aprobación Supervisor")
-    y -= 0.5 * cm
-    c.setFont("Helvetica", 10)
-    c.drawString(2.0 * cm, y, f"Supervisor: {appr.get('supervisor_full_name','')} ({appr.get('supervisor_username','')})")
-    y -= 0.5 * cm
-    c.drawString(2.0 * cm, y, f"Aprobado: {appr.get('approved_at','')}  |  Conforme: {appr.get('conforme','')}")
-    y -= 0.6 * cm
-
-    c.setFont("Helvetica-Bold", 10)
-    c.drawString(2.0 * cm, y, "Firma Operador")
-    c.drawString(11.0 * cm, y, "Firma Supervisor")
-    y -= 3.2 * cm
-
-    try:
-        op_b64 = sub.get("firma_operador_b64") or ""
-        sup_b64 = appr.get("firma_supervisor_b64") or ""
-        if op_b64:
-            op_img = io.BytesIO(b64_to_bytes(op_b64))
-            c.drawImage(op_img, 2.0*cm, y, width=7.5*cm, height=3.0*cm, preserveAspectRatio=True, mask='auto')
-        if sup_b64:
-            sup_img = io.BytesIO(b64_to_bytes(sup_b64))
-            c.drawImage(sup_img, 11.0*cm, y, width=7.5*cm, height=3.0*cm, preserveAspectRatio=True, mask='auto')
-    except Exception:
-        pass
-
-    c.showPage()
-    c.save()
-    return buf.getvalue()
-
-def approve_submission(submission_id: str, supervisor: Dict[str, Any], conforme: str, observaciones: str, firma_supervisor_b64: str):
-    _, wss = get_db()
-    ok = ws_update_row_by_key(wss["submissions"], "submission_id", submission_id, {"status": "APROBADO", "updated_at": _now_iso()})
-    if not ok:
-        raise RuntimeError("No pude actualizar status.")
-
-    sub, df_items, df_photos, _appr = get_submission_detail(submission_id)
-    if not sub:
-        raise RuntimeError("No encontré submission.")
-
-    appr_row = {
-        "submission_id": submission_id,
-        "approved_at": _now_iso(),
-        "supervisor_username": supervisor["username"],
-        "supervisor_full_name": supervisor.get("full_name", ""),
-        "conforme": conforme,
-        "observaciones": observaciones,
-        "firma_supervisor_b64": firma_supervisor_b64,
-    }
-    pdf_bytes = make_pdf_bytes(sub, df_items, df_photos, appr_row)
-    pdf_b64 = base64.b64encode(pdf_bytes).decode("utf-8")
-
-    ws = wss["approvals"]
-    data = ws.get_all_values()
-    if len(data) >= 2:
-        headers = data[0]
-        sid_idx = headers.index("submission_id")
-        rows_to_delete = [i + 1 for i in range(1, len(data)) if str(data[i][sid_idx]).strip() == submission_id]
-        for r in reversed(rows_to_delete):
-            ws.delete_rows(r)
-
-    ws_append(ws, [
-        submission_id, appr_row["approved_at"],
-        appr_row["supervisor_username"], appr_row["supervisor_full_name"],
-        conforme, observaciones, firma_supervisor_b64, pdf_b64
-    ])
+def get_items_for_equipo(nombre_equipo: str) -> List[Dict[str, Any]]:
+    for e in CONFIG.get("equipos", []):
+        if e.get("nombre") == nombre_equipo:
+            return e.get("items", [])
+    return []
 
 
-# =========================
-# EXPORT
-# =========================
-def export_weekly_xlsx(start_date: date, end_date: date) -> bytes:
-    df = list_all_submissions()
-    _, wss = get_db()
-    items = pd.DataFrame(ws_all_records(wss["submission_items"]))
-    approvals = pd.DataFrame(ws_all_records(wss["approvals"]))
-
-    if df.empty:
-        out = io.BytesIO()
-        with pd.ExcelWriter(out, engine="openpyxl") as writer:
-            pd.DataFrame().to_excel(writer, index=False, sheet_name="submissions")
-        return out.getvalue()
-
-    df["date_dt"] = pd.to_datetime(df["date"], errors="coerce").dt.date
-    dfw = df[(df["date_dt"] >= start_date) & (df["date_dt"] <= end_date)].drop(columns=["date_dt"])
-
-    if not items.empty and not dfw.empty:
-        items = items[items["submission_id"].isin(dfw["submission_id"].tolist())]
-    else:
-        items = pd.DataFrame()
-
-    if not approvals.empty and not dfw.empty:
-        approvals = approvals[approvals["submission_id"].isin(dfw["submission_id"].tolist())]
-    else:
-        approvals = pd.DataFrame()
-
-    out = io.BytesIO()
-    with pd.ExcelWriter(out, engine="openpyxl") as writer:
-        dfw.to_excel(writer, index=False, sheet_name="submissions")
-        items.to_excel(writer, index=False, sheet_name="items")
-        approvals.to_excel(writer, index=False, sheet_name="approvals")
-    return out.getvalue()
-
-
-# =========================
-# SIGNATURE
-# =========================
+# =========================================================
+# Signature component
+# =========================================================
 try:
     from streamlit_drawable_canvas import st_canvas
     CANVAS_AVAILABLE = True
@@ -702,23 +547,231 @@ def signature_input(label: str, key_prefix: str) -> Optional[str]:
             return base64.b64encode(bio.getvalue()).decode("utf-8")
         return None
     else:
-        up = st.file_uploader("Sube una imagen con tu firma (PNG/JPG)", type=["png", "jpg", "jpeg"], key=f"{key_prefix}_upload")
+        up = st.file_uploader("Sube una imagen con tu firma (PNG/JPG)", type=["png","jpg","jpeg"], key=f"{key_prefix}_upload")
         st.markdown("</div>", unsafe_allow_html=True)
         if up:
             return base64.b64encode(up.read()).decode("utf-8")
         return None
 
 
-# =========================
-# UI HELPERS
-# =========================
+# =========================================================
+# Submissions / PDF / Export
+# =========================================================
+def make_submission_id() -> str:
+    import random, string
+    return f"S{datetime.now().strftime('%Y%m%d%H%M%S')}{''.join(random.choices(string.ascii_uppercase+string.digits,k=4))}"
+
+def create_submission(equipo: str, operador: Dict[str, Any], estado_general: str, nota: str, firma_b64: str) -> str:
+    _, wss = get_db()
+    sid = make_submission_id()
+    ws_append(wss["submissions"], [
+        sid, _today_iso(), _now_iso(), equipo,
+        operador["username"], operador.get("full_name",""),
+        estado_general, nota, firma_b64, "PENDIENTE", _now_iso()
+    ])
+    return sid
+
+def upsert_submission_items(submission_id: str, items_rows: List[List[Any]]):
+    _, wss = get_db()
+    ws = wss["submission_items"]
+    data = ws.get_all_values()
+    if len(data) >= 2:
+        headers = data[0]
+        sid_idx = headers.index("submission_id")
+        rows_to_delete = [i+1 for i in range(1, len(data)) if str(data[i][sid_idx]).strip() == submission_id]
+        for r in reversed(rows_to_delete):
+            ws.delete_rows(r)
+    for row in items_rows:
+        ws_append(ws, row)
+
+def upsert_photos(submission_id: str, photos_rows: List[List[Any]]):
+    _, wss = get_db()
+    ws = wss["photos"]
+    data = ws.get_all_values()
+    if len(data) >= 2:
+        headers = data[0]
+        sid_idx = headers.index("submission_id")
+        rows_to_delete = [i+1 for i in range(1, len(data)) if str(data[i][sid_idx]).strip() == submission_id]
+        for r in reversed(rows_to_delete):
+            ws.delete_rows(r)
+    for row in photos_rows:
+        ws_append(ws, row)
+
+def list_all_submissions() -> pd.DataFrame:
+    _, wss = get_db()
+    df = pd.DataFrame(ws_all_records(wss["submissions"]))
+    if df.empty:
+        return df
+    df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
+    return df.sort_values("created_at", ascending=False)
+
+def list_pending_submissions() -> pd.DataFrame:
+    df = list_all_submissions()
+    if df.empty:
+        return df
+    return df[df["status"].astype(str).str.upper() == "PENDIENTE"]
+
+def get_submission_detail(submission_id: str):
+    _, wss = get_db()
+    subs = ws_all_records(wss["submissions"])
+    sub = next((s for s in subs if str(s.get("submission_id")) == submission_id), None)
+
+    items = ws_all_records(wss["submission_items"])
+    df_items = pd.DataFrame([i for i in items if str(i.get("submission_id")) == submission_id])
+
+    photos = ws_all_records(wss["photos"])
+    df_photos = pd.DataFrame([p for p in photos if str(p.get("submission_id")) == submission_id])
+
+    approvals = ws_all_records(wss["approvals"])
+    appr = next((a for a in approvals if str(a.get("submission_id")) == submission_id), None)
+
+    return sub, df_items, df_photos, appr
+
+def make_pdf_bytes(sub: Dict[str, Any], df_items: pd.DataFrame, df_photos: pd.DataFrame, appr: Dict[str, Any]) -> bytes:
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=A4)
+    width, height = A4
+
+    y = height - 2.0*cm
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(2.0*cm, y, "Checklist de Equipos - Reporte Aprobado")
+    y -= 0.8*cm
+
+    c.setFont("Helvetica", 10)
+    c.drawString(2.0*cm, y, f"Equipo: {sub.get('equipo','')}")
+    y -= 0.5*cm
+    c.drawString(2.0*cm, y, f"Fecha: {sub.get('date','')}  |  Creado: {sub.get('created_at','')}")
+    y -= 0.5*cm
+    c.drawString(2.0*cm, y, f"Operador: {sub.get('operador_full_name','')} ({sub.get('operador_username','')})")
+    y -= 0.5*cm
+    c.drawString(2.0*cm, y, f"Estado general: {sub.get('estado_general','')}")
+    y -= 0.7*cm
+
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(2.0*cm, y, "Detalle de ítems")
+    y -= 0.5*cm
+    c.setFont("Helvetica", 9)
+
+    for _, row in df_items.fillna("").iterrows():
+        line = f"- {row.get('item_text','')} | Estado: {row.get('estado','')} | Coment: {str(row.get('comentario',''))[:60]}"
+        if y < 4.0*cm:
+            c.showPage()
+            y = height - 2.0*cm
+            c.setFont("Helvetica", 9)
+        c.drawString(2.0*cm, y, line[:140])
+        y -= 0.35*cm
+
+    if y < 8.0*cm:
+        c.showPage()
+        y = height - 2.0*cm
+
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(2.0*cm, y, "Aprobación Supervisor")
+    y -= 0.5*cm
+    c.setFont("Helvetica", 10)
+    c.drawString(2.0*cm, y, f"Supervisor: {appr.get('supervisor_full_name','')} ({appr.get('supervisor_username','')})")
+    y -= 0.5*cm
+    c.drawString(2.0*cm, y, f"Aprobado: {appr.get('approved_at','')}  |  Conforme: {appr.get('conforme','')}")
+    y -= 0.6*cm
+
+    c.setFont("Helvetica-Bold", 10)
+    c.drawString(2.0*cm, y, "Firma Operador")
+    c.drawString(11.0*cm, y, "Firma Supervisor")
+    y -= 3.2*cm
+
+    try:
+        op_b64 = sub.get("firma_operador_b64") or ""
+        sup_b64 = appr.get("firma_supervisor_b64") or ""
+        if op_b64:
+            op_img = io.BytesIO(b64_to_bytes(op_b64))
+            c.drawImage(op_img, 2.0*cm, y, width=7.5*cm, height=3.0*cm, preserveAspectRatio=True, mask="auto")
+        if sup_b64:
+            sup_img = io.BytesIO(b64_to_bytes(sup_b64))
+            c.drawImage(sup_img, 11.0*cm, y, width=7.5*cm, height=3.0*cm, preserveAspectRatio=True, mask="auto")
+    except Exception:
+        pass
+
+    c.showPage()
+    c.save()
+    return buf.getvalue()
+
+def approve_submission(submission_id: str, supervisor: Dict[str, Any], conforme: str, observaciones: str, firma_supervisor_b64: str):
+    _, wss = get_db()
+    ok = ws_update_row_by_key(wss["submissions"], "submission_id", submission_id, {"status": "APROBADO", "updated_at": _now_iso()})
+    if not ok:
+        raise RuntimeError("No pude actualizar status del submission.")
+
+    sub, df_items, df_photos, _appr = get_submission_detail(submission_id)
+    if not sub:
+        raise RuntimeError("No encontré submission.")
+
+    appr_row = {
+        "submission_id": submission_id,
+        "approved_at": _now_iso(),
+        "supervisor_username": supervisor["username"],
+        "supervisor_full_name": supervisor.get("full_name",""),
+        "conforme": conforme,
+        "observaciones": observaciones,
+        "firma_supervisor_b64": firma_supervisor_b64,
+    }
+    pdf_bytes = make_pdf_bytes(sub, df_items, df_photos, appr_row)
+    pdf_b64 = base64.b64encode(pdf_bytes).decode("utf-8")
+
+    # Upsert approvals
+    ws = wss["approvals"]
+    data = ws.get_all_values()
+    if len(data) >= 2:
+        headers = data[0]
+        sid_idx = headers.index("submission_id")
+        rows_to_delete = [i+1 for i in range(1, len(data)) if str(data[i][sid_idx]).strip() == submission_id]
+        for r in reversed(rows_to_delete):
+            ws.delete_rows(r)
+
+    ws_append(ws, [
+        submission_id, appr_row["approved_at"],
+        appr_row["supervisor_username"], appr_row["supervisor_full_name"],
+        conforme, observaciones, firma_supervisor_b64, pdf_b64
+    ])
+
+def export_weekly_xlsx(start_date: date, end_date: date) -> bytes:
+    df = list_all_submissions()
+    _, wss = get_db()
+    items = pd.DataFrame(ws_all_records(wss["submission_items"]))
+    approvals = pd.DataFrame(ws_all_records(wss["approvals"]))
+
+    if df.empty:
+        out = io.BytesIO()
+        with pd.ExcelWriter(out, engine="openpyxl") as writer:
+            pd.DataFrame().to_excel(writer, index=False, sheet_name="submissions")
+        return out.getvalue()
+
+    df["date_dt"] = pd.to_datetime(df["date"], errors="coerce").dt.date
+    dfw = df[(df["date_dt"] >= start_date) & (df["date_dt"] <= end_date)].drop(columns=["date_dt"])
+
+    if not items.empty and not dfw.empty:
+        items = items[items["submission_id"].isin(dfw["submission_id"].tolist())]
+    else:
+        items = pd.DataFrame()
+
+    if not approvals.empty and not dfw.empty:
+        approvals = approvals[approvals["submission_id"].isin(dfw["submission_id"].tolist())]
+    else:
+        approvals = pd.DataFrame()
+
+    out = io.BytesIO()
+    with pd.ExcelWriter(out, engine="openpyxl") as writer:
+        dfw.to_excel(writer, index=False, sheet_name="submissions")
+        items.to_excel(writer, index=False, sheet_name="items")
+        approvals.to_excel(writer, index=False, sheet_name="approvals")
+    return out.getvalue()
+
+
+# =========================================================
+# UI helpers
+# =========================================================
 def role_badge(role: str) -> str:
     role = (role or "").lower()
     return "🛡️ Supervisor" if role == "supervisor" else "👷 Operador"
-
-def logout():
-    st.session_state.user = None
-    st.session_state.pop("selected_submission", None)
 
 def card_open():
     st.markdown('<div class="card">', unsafe_allow_html=True)
@@ -726,34 +779,27 @@ def card_open():
 def card_close():
     st.markdown("</div>", unsafe_allow_html=True)
 
+def logout():
+    st.session_state.user = None
+    st.session_state.pop("selected_submission", None)
 
-# =========================
-# INIT
-# =========================
-ensure_admin_seed()
+
+# =========================================================
+# INIT session
+# =========================================================
 if "user" not in st.session_state:
     st.session_state.user = None
 
-
-# =========================
-# DIAGNÓSTICO SI NO HAY EQUIPOS
-# =========================
-equipos_list = list_equipos()
-if not equipos_list:
-    # muestra info útil y corta ejecución si es operador/supervisor después del login
-    st.warning("No se encontraron equipos en checklist_config.json. El JSON no está en formato reconocible.")
-    if isinstance(RAW_CONFIG, dict):
-        st.info(f"Claves encontradas en tu JSON: {list(RAW_CONFIG.keys())[:30]}")
-    else:
-        st.info(f"Tipo de JSON detectado: {type(RAW_CONFIG)}")
-    st.info("Solución: asegúrate de que checklist_config.json contenga equipos y preguntas. Si quieres, pega aquí el contenido y te lo dejo exacto.")
-    # No hacemos st.stop() aquí porque el supervisor puede entrar a Usuarios; pero operador sí necesita equipos.
+# Admin seed/reset (antes de login)
+ensure_admin_seed_and_optional_reset()
 
 
-# =========================
-# LOGIN (PRO)
-# =========================
+# =========================================================
+# LOGIN (IMPORTANTE: se renderiza ANTES de todo lo demás)
+# =========================================================
 if not st.session_state.user:
+    inject_css(is_login=True)
+
     st.markdown('<div class="login-overlay"></div>', unsafe_allow_html=True)
     st.markdown('<div class="login-wrap"><div class="login-card">', unsafe_allow_html=True)
 
@@ -782,13 +828,18 @@ if not st.session_state.user:
             st.rerun()
 
     st.caption("Si olvidaste tu acceso, el supervisor debe crear tu usuario.")
+
     st.markdown("</div></div>", unsafe_allow_html=True)
+
+    # CLAVE: no renderizar nada más (evita franja blanca)
     st.stop()
 
 
-# =========================
-# APP (POST LOGIN)
-# =========================
+# =========================================================
+# APP (post-login)
+# =========================================================
+inject_css(is_login=False)
+
 user = st.session_state.user
 role = (user.get("role") or "operador").lower()
 
@@ -799,6 +850,8 @@ with topc2:
     if st.button("Cerrar sesión"):
         logout()
         st.rerun()
+
+equipos_list = list_equipos()
 
 with st.sidebar:
     st.markdown("### Menú")
@@ -811,12 +864,14 @@ with st.sidebar:
         page = st.radio("Secciones", ["Pendientes", "Reportes", "Usuarios", "Export semanal"], index=0)
 
 
-# =========================
+# =========================================================
 # OPERADOR
-# =========================
+# =========================================================
 if role == "operador":
     if not equipos_list:
-        st.error("No hay equipos cargados. Revisa checklist_config.json.")
+        st.error("No hay equipos cargados. Revisa checklist_config.json (estructura o contenido).")
+        if isinstance(RAW_CONFIG, dict):
+            st.info(f"Claves encontradas en tu JSON: {list(RAW_CONFIG.keys())[:30]}")
         st.stop()
 
     if page == "Llenar checklist":
@@ -876,8 +931,10 @@ if role == "operador":
             sid = create_submission(equipo, user, estado_general, nota, firma_b64)
             items_rows2 = [[sid, r[1], r[2], r[3], r[4]] for r in items_rows]
             photos_rows2 = [[sid, r[1], r[2], r[3]] for r in photos_rows]
+
             upsert_submission_items(sid, items_rows2)
             upsert_photos(sid, photos_rows2)
+
             st.success(f"Enviado ✅ ID: {sid} (pendiente de revisión)")
 
         card_close()
@@ -885,8 +942,10 @@ if role == "operador":
     elif page == "Mis envíos":
         card_open()
         st.markdown("### Mis envíos")
+
         df = list_all_submissions()
         dfo = df[df["operador_username"].astype(str).str.lower() == user["username"].lower()] if not df.empty else pd.DataFrame()
+
         if dfo.empty:
             st.info("Aún no tienes envíos.")
             card_close()
@@ -912,9 +971,9 @@ if role == "operador":
         card_close()
 
 
-# =========================
+# =========================================================
 # SUPERVISOR
-# =========================
+# =========================================================
 else:
     if page == "Usuarios":
         card_open()
@@ -987,6 +1046,7 @@ else:
     elif page == "Pendientes":
         card_open()
         st.markdown("### Pendientes de aprobación")
+
         dfp = list_pending_submissions()
         if dfp.empty:
             st.success("No hay pendientes 🎉")
@@ -1051,6 +1111,7 @@ else:
     elif page == "Reportes":
         card_open()
         st.markdown("### Reportes y Dashboard")
+
         df = list_all_submissions()
         if df.empty:
             st.info("No hay datos aún.")
@@ -1083,11 +1144,13 @@ else:
         st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
         st.dataframe(dff[["submission_id", "date", "equipo", "operador_full_name", "estado_general", "status", "updated_at"]].head(300),
                      use_container_width=True, hide_index=True)
+
         card_close()
 
     elif page == "Export semanal":
         card_open()
         st.markdown("### Export semanal")
+
         c1, c2, c3 = st.columns([1, 1, 2])
         with c1:
             start = st.date_input("Desde", value=date.today() - timedelta(days=7))
@@ -1101,7 +1164,11 @@ else:
                 st.error("La fecha final no puede ser menor.")
                 st.stop()
             data = export_weekly_xlsx(start, end)
-            st.download_button("Descargar Excel", data=data,
-                               file_name=f"reporte_{start.isoformat()}_a_{end.isoformat()}.xlsx",
-                               mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            st.download_button(
+                "Descargar Excel",
+                data=data,
+                file_name=f"reporte_{start.isoformat()}_a_{end.isoformat()}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+
         card_close()
