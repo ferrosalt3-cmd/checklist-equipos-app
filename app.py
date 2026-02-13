@@ -25,7 +25,7 @@ st.set_page_config(page_title="Checklist Equipos", page_icon="✅", layout="wide
 
 
 # =========================
-# BRAND / CSS (PRO)
+# BRAND / CSS (RESPONSIVE + LEGIBLE)
 # =========================
 def _safe_b64(path: str) -> Optional[str]:
     try:
@@ -36,40 +36,36 @@ def _safe_b64(path: str) -> Optional[str]:
 
 def inject_css():
     fondo_b64 = _safe_b64("fondo.png")
-
     st.markdown("""
     <style>
-      /* Base layout */
       .block-container { padding-top: 1.2rem; padding-bottom: 2.2rem; max-width: 1200px; }
-      [data-testid="stSidebar"] { background: rgba(255,255,255,0.85); }
+      [data-testid="stSidebar"] { background: rgba(255,255,255,0.92); }
 
-      /* Hide Streamlit footer/menu for "app feel" */
+      /* Hide Streamlit chrome */
       #MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
       header {visibility: hidden;}
 
-      /* Inputs look */
-      .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"]  {
+      .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {
         border-radius: 12px !important;
       }
       .stButton > button {
         border-radius: 12px;
         padding: 0.65rem 1rem;
-        font-weight: 600;
+        font-weight: 650;
       }
 
-      /* Cards */
       .card {
-        background: rgba(255,255,255,0.92);
-        border: 1px solid rgba(0,0,0,0.06);
+        background: rgba(255,255,255,0.94);
+        border: 1px solid rgba(0,0,0,0.08);
         border-radius: 18px;
         padding: 18px;
-        box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+        box-shadow: 0 12px 34px rgba(0,0,0,0.10);
       }
-      .muted { color: rgba(0,0,0,0.6); font-size: 0.92rem; }
-      .title { font-size: 1.35rem; font-weight: 800; margin: 0; }
-      .subtitle { font-size: 1.05rem; font-weight: 650; margin: 0.2rem 0 0.3rem 0; }
-      .hr { height: 1px; background: rgba(0,0,0,0.08); margin: 14px 0; }
+
+      .title { font-size: 1.35rem; font-weight: 900; margin: 0; }
+      .muted { color: rgba(0,0,0,0.62); font-size: 0.92rem; margin: 0.25rem 0 0.1rem 0; }
+      .hr { height: 1px; background: rgba(0,0,0,0.10); margin: 14px 0; }
 
       .pill {
         display: inline-block;
@@ -80,42 +76,36 @@ def inject_css():
         margin-right: 6px;
       }
 
-      /* Login layout */
-      .login-wrap {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 70vh;
+      /* Login centered overlay */
+      .login-overlay{
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.35);
+        z-index: 998;
       }
-      .login-card {
-        width: min(520px, 92vw);
+      .login-wrap{
+        position: fixed; inset: 0;
+        display: flex; justify-content: center; align-items: center;
+        padding: 18px;
+        z-index: 999;
+      }
+      .login-card{
+        width: min(520px, 94vw);
+        background: rgba(255,255,255,0.96);
+        border: 1px solid rgba(0,0,0,0.10);
+        border-radius: 20px;
         padding: 22px;
+        box-shadow: 0 18px 45px rgba(0,0,0,0.25);
       }
-      .brand-row {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .brand-title {
-        font-size: 1.45rem;
-        font-weight: 900;
-        margin: 0;
-      }
-      .brand-sub {
-        margin: 0;
-        color: rgba(0,0,0,0.62);
-        font-size: 0.95rem;
-      }
-      .small-note {
-        color: rgba(0,0,0,0.55);
-        font-size: 0.86rem;
-        margin-top: 8px;
+      .brand-row{ display:flex; gap:12px; align-items:center; margin-bottom:10px; }
+      .brand-title{ font-size:1.45rem; font-weight: 950; margin:0; }
+      .brand-sub{ margin:0; color: rgba(0,0,0,0.62); font-size:0.95rem; }
+      @media (max-width: 640px){
+        .login-card{ padding: 16px; border-radius: 16px; }
+        .brand-title{ font-size:1.25rem; }
       }
 
-      /* Signature box */
       .sigbox {
-        background: rgba(255,255,255,0.97);
+        background: rgba(255,255,255,0.98);
         border: 1px dashed rgba(0,0,0,0.25);
         border-radius: 14px;
         padding: 12px;
@@ -123,7 +113,6 @@ def inject_css():
     </style>
     """, unsafe_allow_html=True)
 
-    # Background only if exists
     if fondo_b64:
         st.markdown(f"""
         <style>
@@ -133,11 +122,23 @@ def inject_css():
             background-position: center;
             background-attachment: fixed;
           }}
+          /* overlay suave para que se lea */
+          .stApp::before {{
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.35);
+            pointer-events: none;
+            z-index: 0;
+          }}
+          .block-container, [data-testid="stSidebar"] {{
+            position: relative;
+            z-index: 1;
+          }}
         </style>
         """, unsafe_allow_html=True)
 
 inject_css()
-
 
 def show_top_header():
     col1, col2 = st.columns([1, 6])
@@ -150,14 +151,13 @@ def show_top_header():
 
 
 # =========================
-# GOOGLE AUTH (STREAMLIT CLOUD)
+# GOOGLE AUTH
 # =========================
 def get_gsheet_client() -> gspread.Client:
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive",
     ]
-
     if "gcp_service_account" in st.secrets:
         creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
     else:
@@ -165,7 +165,6 @@ def get_gsheet_client() -> gspread.Client:
         if not gac:
             raise RuntimeError("Falta Secrets gcp_service_account (Streamlit Cloud) o GOOGLE_APPLICATION_CREDENTIALS (local).")
         creds = Credentials.from_service_account_file(gac, scopes=scopes)
-
     return gspread.authorize(creds)
 
 def get_sheet_id() -> str:
@@ -173,25 +172,141 @@ def get_sheet_id() -> str:
     if not sid:
         sid = os.environ.get("GSHEET_ID")
     if not sid:
-        raise RuntimeError("Falta GSHEET_ID en Secrets o variable de entorno.")
+        raise RuntimeError("Falta GSHEET_ID en Secrets.")
     return sid
 
 
 # =========================
-# CONFIG JSON
+# CONFIG JSON (ROBUSTO)
 # =========================
-def load_checklist_config() -> Dict[str, Any]:
-    cfg_path = "checklist_config.json"
-    if not os.path.exists(cfg_path):
-        raise RuntimeError("No encuentro checklist_config.json en la raíz del repo.")
-    with open(cfg_path, "r", encoding="utf-8") as f:
+def load_json_any(path: str) -> Any:
+    if not os.path.exists(path):
+        raise RuntimeError(f"No encuentro {path} en la raíz del repo.")
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-CONFIG = load_checklist_config()
+RAW_CONFIG = load_json_any("checklist_config.json")
+
+def _as_list(x):
+    if x is None:
+        return []
+    if isinstance(x, list):
+        return x
+    return [x]
+
+def _first_key(d: dict, keys: List[str]):
+    for k in keys:
+        if k in d and d[k] is not None:
+            return d[k]
+    return None
+
+def normalize_config(raw: Any) -> Dict[str, Any]:
+    """
+    Convierte cualquier estructura típica a:
+    {
+      "equipos":[
+        {"nombre":"...", "items":[{"id":"I1","texto":"..."}, ...]},
+        ...
+      ]
+    }
+    Acepta claves comunes:
+    - equipos/equipment/unidades
+    - checklist/preguntas/items/criterios
+    - nombre/name/equipo/unidad
+    """
+    # Si ya viene bien
+    if isinstance(raw, dict) and isinstance(raw.get("equipos"), list):
+        # normaliza items internos
+        equipos_out = []
+        for e in raw["equipos"]:
+            if not isinstance(e, dict):
+                continue
+            nombre = _first_key(e, ["nombre", "name", "equipo", "unidad", "id_equipo", "codigo"]) or "SIN_NOMBRE"
+            items_raw = _first_key(e, ["items", "checklist", "preguntas", "criterios", "lista", "campos"]) or []
+            items_out = []
+            for idx, it in enumerate(_as_list(items_raw)):
+                if isinstance(it, dict):
+                    texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name", "label"]) or f"Item {idx+1}"
+                    iid = _first_key(it, ["id", "item_id", "codigo"]) or f"I{idx+1}"
+                else:
+                    texto = str(it)
+                    iid = f"I{idx+1}"
+                items_out.append({"id": str(iid), "texto": str(texto)})
+            equipos_out.append({"nombre": str(nombre), "items": items_out})
+        return {"equipos": equipos_out}
+
+    # Si es dict pero con otra clave para equipos
+    if isinstance(raw, dict):
+        equipos_raw = _first_key(raw, ["equipos", "equipment", "unidades", "maquinas", "activos"])
+        if equipos_raw is None:
+            # a veces vienen como dict {"Apilador #01": [...preguntas...], ...}
+            if all(isinstance(v, (list, dict)) for v in raw.values()) and len(raw.keys()) > 0:
+                equipos_out = []
+                for k, v in raw.items():
+                    nombre = str(k)
+                    items_raw = v
+                    # si v es dict con items
+                    if isinstance(v, dict):
+                        items_raw = _first_key(v, ["items", "checklist", "preguntas", "criterios", "lista", "campos"]) or v
+                    items_out = []
+                    for idx, it in enumerate(_as_list(items_raw)):
+                        if isinstance(it, dict):
+                            texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name", "label"]) or f"Item {idx+1}"
+                            iid = _first_key(it, ["id", "item_id", "codigo"]) or f"I{idx+1}"
+                        else:
+                            texto = str(it)
+                            iid = f"I{idx+1}"
+                        items_out.append({"id": str(iid), "texto": str(texto)})
+                    equipos_out.append({"nombre": nombre, "items": items_out})
+                return {"equipos": equipos_out}
+
+            return {"equipos": []}
+
+        equipos_out = []
+        for e in _as_list(equipos_raw):
+            if isinstance(e, dict):
+                nombre = _first_key(e, ["nombre", "name", "equipo", "unidad", "id_equipo", "codigo"]) or "SIN_NOMBRE"
+                items_raw = _first_key(e, ["items", "checklist", "preguntas", "criterios", "lista", "campos"]) or []
+            else:
+                nombre = str(e)
+                items_raw = []
+            items_out = []
+            for idx, it in enumerate(_as_list(items_raw)):
+                if isinstance(it, dict):
+                    texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name", "label"]) or f"Item {idx+1}"
+                    iid = _first_key(it, ["id", "item_id", "codigo"]) or f"I{idx+1}"
+                else:
+                    texto = str(it)
+                    iid = f"I{idx+1}"
+                items_out.append({"id": str(iid), "texto": str(texto)})
+            equipos_out.append({"nombre": str(nombre), "items": items_out})
+        return {"equipos": equipos_out}
+
+    # Si es lista (lista de equipos)
+    if isinstance(raw, list):
+        equipos_out = []
+        for e in raw:
+            if isinstance(e, dict):
+                nombre = _first_key(e, ["nombre", "name", "equipo", "unidad"]) or "SIN_NOMBRE"
+                items_raw = _first_key(e, ["items", "checklist", "preguntas"]) or []
+                items_out = []
+                for idx, it in enumerate(_as_list(items_raw)):
+                    if isinstance(it, dict):
+                        texto = _first_key(it, ["texto", "item", "pregunta", "descripcion", "name"]) or f"Item {idx+1}"
+                        iid = _first_key(it, ["id", "item_id"]) or f"I{idx+1}"
+                    else:
+                        texto = str(it)
+                        iid = f"I{idx+1}"
+                    items_out.append({"id": str(iid), "texto": str(texto)})
+                equipos_out.append({"nombre": str(nombre), "items": items_out})
+        return {"equipos": equipos_out}
+
+    return {"equipos": []}
+
+CONFIG = normalize_config(RAW_CONFIG)
 
 def list_equipos() -> List[str]:
-    equipos = CONFIG.get("equipos", [])
-    return [e.get("nombre", "SIN_NOMBRE") for e in equipos]
+    return [e.get("nombre", "SIN_NOMBRE") for e in CONFIG.get("equipos", [])]
 
 def get_items_for_equipo(nombre_equipo: str) -> List[Dict[str, Any]]:
     for e in CONFIG.get("equipos", []):
@@ -225,7 +340,6 @@ def ensure_worksheets(sh: gspread.Spreadsheet):
             ws = sh.add_worksheet(title=name, rows="2000", cols=str(max(12, len(headers) + 5)))
             ws.append_row(headers)
             return
-
         values = ws.get_all_values()
         if not values:
             ws.append_row(headers)
@@ -303,8 +417,7 @@ def hash_password(pw: str) -> str:
 
 def get_user(username: str) -> Optional[Dict[str, Any]]:
     _, wss = get_db()
-    users = ws_all_records(wss["users"])
-    for u in users:
+    for u in ws_all_records(wss["users"]):
         if str(u.get("username", "")).strip().lower() == username.strip().lower():
             return u
     return None
@@ -314,7 +427,6 @@ def ensure_admin_seed():
     users = ws_all_records(wss["users"])
     if users:
         return
-    # Creamos admin sin mostrar credenciales en el UI
     ws_append(wss["users"], ["admin", hash_password("admin123"), "supervisor", "Administrador", True, _now_iso()])
 
 def authenticate(username: str, password: str) -> Optional[Dict[str, Any]]:
@@ -373,8 +485,7 @@ def upsert_photos(submission_id: str, photos_rows: List[List[Any]]):
 
 def list_pending_submissions() -> pd.DataFrame:
     _, wss = get_db()
-    subs = ws_all_records(wss["submissions"])
-    df = pd.DataFrame(subs)
+    df = pd.DataFrame(ws_all_records(wss["submissions"]))
     if df.empty:
         return df
     df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
@@ -383,8 +494,7 @@ def list_pending_submissions() -> pd.DataFrame:
 
 def list_all_submissions() -> pd.DataFrame:
     _, wss = get_db()
-    subs = ws_all_records(wss["submissions"])
-    df = pd.DataFrame(subs)
+    df = pd.DataFrame(ws_all_records(wss["submissions"]))
     if df.empty:
         return df
     df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
@@ -429,14 +539,6 @@ def make_pdf_bytes(sub: Dict[str, Any], df_items: pd.DataFrame, df_photos: pd.Da
     c.drawString(2.0 * cm, y, f"Estado general: {sub.get('estado_general','')}")
     y -= 0.7 * cm
 
-    if sub.get("nota"):
-        c.setFont("Helvetica-Bold", 10)
-        c.drawString(2.0 * cm, y, "Nota operador:")
-        y -= 0.45 * cm
-        c.setFont("Helvetica", 10)
-        c.drawString(2.0 * cm, y, str(sub.get("nota"))[:120])
-        y -= 0.6 * cm
-
     c.setFont("Helvetica-Bold", 11)
     c.drawString(2.0 * cm, y, "Detalle de ítems")
     y -= 0.5 * cm
@@ -464,16 +566,11 @@ def make_pdf_bytes(sub: Dict[str, Any], df_items: pd.DataFrame, df_photos: pd.Da
     c.drawString(2.0 * cm, y, f"Aprobado: {appr.get('approved_at','')}  |  Conforme: {appr.get('conforme','')}")
     y -= 0.6 * cm
 
-    if appr.get("observaciones"):
-        c.drawString(2.0 * cm, y, f"Obs: {str(appr.get('observaciones'))[:120]}")
-        y -= 0.6 * cm
-
     c.setFont("Helvetica-Bold", 10)
     c.drawString(2.0 * cm, y, "Firma Operador")
     c.drawString(11.0 * cm, y, "Firma Supervisor")
     y -= 3.2 * cm
 
-    # Firmas (si fallan, no rompe)
     try:
         op_b64 = sub.get("firma_operador_b64") or ""
         sup_b64 = appr.get("firma_supervisor_b64") or ""
@@ -485,25 +582,6 @@ def make_pdf_bytes(sub: Dict[str, Any], df_items: pd.DataFrame, df_photos: pd.Da
             c.drawImage(sup_img, 11.0*cm, y, width=7.5*cm, height=3.0*cm, preserveAspectRatio=True, mask='auto')
     except Exception:
         pass
-
-    y -= 0.8 * cm
-
-    if not df_photos.empty:
-        if y < 5.0 * cm:
-            c.showPage()
-            y = height - 2.0 * cm
-        c.setFont("Helvetica-Bold", 11)
-        c.drawString(2.0 * cm, y, "Evidencias (fotos adjuntas)")
-        y -= 0.5 * cm
-        c.setFont("Helvetica", 9)
-        for _, prow in df_photos.fillna("").iterrows():
-            line = f"- Item {prow.get('item_id','')}: {prow.get('filename','')}"
-            if y < 2.5 * cm:
-                c.showPage()
-                y = height - 2.0 * cm
-                c.setFont("Helvetica", 9)
-            c.drawString(2.0 * cm, y, line[:140])
-            y -= 0.35 * cm
 
     c.showPage()
     c.save()
@@ -548,7 +626,7 @@ def approve_submission(submission_id: str, supervisor: Dict[str, Any], conforme:
 
 
 # =========================
-# EXPORT SEMANAL
+# EXPORT
 # =========================
 def export_weekly_xlsx(start_date: date, end_date: date) -> bytes:
     df = list_all_submissions()
@@ -658,16 +736,30 @@ if "user" not in st.session_state:
 
 
 # =========================
-# LOGIN (PRO, CENTERED) - SIN TEXTO admin/admin123
+# DIAGNÓSTICO SI NO HAY EQUIPOS
+# =========================
+equipos_list = list_equipos()
+if not equipos_list:
+    # muestra info útil y corta ejecución si es operador/supervisor después del login
+    st.warning("No se encontraron equipos en checklist_config.json. El JSON no está en formato reconocible.")
+    if isinstance(RAW_CONFIG, dict):
+        st.info(f"Claves encontradas en tu JSON: {list(RAW_CONFIG.keys())[:30]}")
+    else:
+        st.info(f"Tipo de JSON detectado: {type(RAW_CONFIG)}")
+    st.info("Solución: asegúrate de que checklist_config.json contenga equipos y preguntas. Si quieres, pega aquí el contenido y te lo dejo exacto.")
+    # No hacemos st.stop() aquí porque el supervisor puede entrar a Usuarios; pero operador sí necesita equipos.
+
+
+# =========================
+# LOGIN (PRO)
 # =========================
 if not st.session_state.user:
-    st.markdown('<div class="login-wrap">', unsafe_allow_html=True)
-    st.markdown('<div class="card login-card">', unsafe_allow_html=True)
+    st.markdown('<div class="login-overlay"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="login-wrap"><div class="login-card">', unsafe_allow_html=True)
 
-    # branding row
     st.markdown('<div class="brand-row">', unsafe_allow_html=True)
     if os.path.exists("logo.png"):
-        st.image("logo.png", width=70)
+        st.image("logo.png", width=72)
     st.markdown("""
       <div>
         <p class="brand-title">Checklist de Equipos</p>
@@ -681,18 +773,15 @@ if not st.session_state.user:
     username = st.text_input("Usuario", placeholder="Ej: operador1")
     password = st.text_input("Contraseña", type="password", placeholder="********")
 
-    c1, c2 = st.columns([1, 1])
-    with c1:
-        if st.button("Entrar", use_container_width=True):
-            user = authenticate(username, password)
-            if not user:
-                st.error("Usuario o contraseña incorrecta.")
-            else:
-                st.session_state.user = user
-                st.rerun()
-    with c2:
-        st.markdown('<p class="small-note">Si olvidaste tu acceso, el supervisor debe crear tu usuario.</p>', unsafe_allow_html=True)
+    if st.button("Entrar", use_container_width=True):
+        user = authenticate(username, password)
+        if not user:
+            st.error("Usuario o contraseña incorrecta.")
+        else:
+            st.session_state.user = user
+            st.rerun()
 
+    st.caption("Si olvidaste tu acceso, el supervisor debe crear tu usuario.")
     st.markdown("</div></div>", unsafe_allow_html=True)
     st.stop()
 
@@ -703,23 +792,19 @@ if not st.session_state.user:
 user = st.session_state.user
 role = (user.get("role") or "operador").lower()
 
-# top header
 show_top_header()
 
-# logout button
 topc1, topc2 = st.columns([6, 1])
 with topc2:
     if st.button("Cerrar sesión"):
         logout()
         st.rerun()
 
-# sidebar
 with st.sidebar:
     st.markdown("### Menú")
     st.markdown(f"**Usuario:** {user.get('full_name','') or user.get('username')}")
     st.markdown(f"**Rol:** {role_badge(role)}")
     st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
-
     if role == "operador":
         page = st.radio("Secciones", ["Llenar checklist", "Mis envíos"], index=0)
     else:
@@ -730,11 +815,15 @@ with st.sidebar:
 # OPERADOR
 # =========================
 if role == "operador":
+    if not equipos_list:
+        st.error("No hay equipos cargados. Revisa checklist_config.json.")
+        st.stop()
+
     if page == "Llenar checklist":
         card_open()
         st.markdown("### Llenar checklist")
 
-        equipo = st.selectbox("Selecciona equipo", options=list_equipos())
+        equipo = st.selectbox("Selecciona equipo", options=equipos_list)
         items = get_items_for_equipo(equipo)
 
         st.markdown(f'<span class="pill">Equipo: {equipo}</span><span class="pill">Ítems: {len(items)}</span>', unsafe_allow_html=True)
@@ -752,22 +841,21 @@ if role == "operador":
 
         for idx, it in enumerate(items):
             item_id = it.get("id") or f"I{idx+1}"
-            text = it.get("texto") or it.get("item") or it.get("name") or f"Item {idx+1}"
+            text = it.get("texto") or f"Item {idx+1}"
 
             st.markdown(f"**{idx+1}. {text}**")
             cA, cB, cC = st.columns([1.2, 2.2, 2.2])
 
             with cA:
-                estado = st.selectbox("Estado", estados_opciones, key=f"estado_{item_id}", label_visibility="collapsed")
+                estado = st.selectbox("Estado", estados_opciones, key=f"estado_{equipo}_{item_id}", label_visibility="collapsed")
             with cB:
-                comentario = st.text_input("Comentario", key=f"coment_{item_id}", placeholder="(Opcional)")
+                comentario = st.text_input("Comentario", key=f"coment_{equipo}_{item_id}", placeholder="(Opcional)")
             with cC:
                 up = None
                 if estado == "Operativo con falla":
-                    up = st.file_uploader("Foto evidencia (obligatoria)", type=["png", "jpg", "jpeg"], key=f"foto_{item_id}")
+                    up = st.file_uploader("Foto evidencia (obligatoria)", type=["png", "jpg", "jpeg"], key=f"foto_{equipo}_{item_id}")
                     if not up:
                         missing_photo = True
-
                 if up:
                     photos_rows.append([None, item_id, up.name, base64.b64encode(up.read()).decode("utf-8")])
 
@@ -777,24 +865,21 @@ if role == "operador":
         st.markdown("#### Firma del operador")
         firma_b64 = signature_input("Firma digital", "firma_operador")
 
-        c1, c2 = st.columns([1, 2])
-        with c1:
-            if st.button("Enviar a supervisor"):
-                if missing_photo:
-                    st.error("Falta foto en ítems con 'Operativo con falla'.")
-                    st.stop()
-                if not firma_b64:
-                    st.error("La firma del operador es obligatoria.")
-                    st.stop()
+        if st.button("Enviar a supervisor"):
+            if missing_photo:
+                st.error("Falta foto en ítems con 'Operativo con falla'.")
+                st.stop()
+            if not firma_b64:
+                st.error("La firma del operador es obligatoria.")
+                st.stop()
 
-                sid = create_submission(equipo, user, estado_general, nota, firma_b64)
-                items_rows2 = [[sid, r[1], r[2], r[3], r[4]] for r in items_rows]
-                photos_rows2 = [[sid, r[1], r[2], r[3]] for r in photos_rows]
+            sid = create_submission(equipo, user, estado_general, nota, firma_b64)
+            items_rows2 = [[sid, r[1], r[2], r[3], r[4]] for r in items_rows]
+            photos_rows2 = [[sid, r[1], r[2], r[3]] for r in photos_rows]
+            upsert_submission_items(sid, items_rows2)
+            upsert_photos(sid, photos_rows2)
+            st.success(f"Enviado ✅ ID: {sid} (pendiente de revisión)")
 
-                upsert_submission_items(sid, items_rows2)
-                upsert_photos(sid, photos_rows2)
-
-                st.success(f"Enviado ✅ ID: {sid} (pendiente de revisión)")
         card_close()
 
     elif page == "Mis envíos":
@@ -802,7 +887,6 @@ if role == "operador":
         st.markdown("### Mis envíos")
         df = list_all_submissions()
         dfo = df[df["operador_username"].astype(str).str.lower() == user["username"].lower()] if not df.empty else pd.DataFrame()
-
         if dfo.empty:
             st.info("Aún no tienes envíos.")
             card_close()
@@ -822,8 +906,9 @@ if role == "operador":
             elif not appr or not appr.get("pdf_b64"):
                 st.error("No hay PDF.")
             else:
-                pdf_bytes = b64_to_bytes(appr["pdf_b64"])
-                st.download_button("Descargar PDF", data=pdf_bytes, file_name=f"checklist_{sid}.pdf", mime="application/pdf")
+                st.download_button("Descargar PDF", data=b64_to_bytes(appr["pdf_b64"]),
+                                   file_name=f"checklist_{sid}.pdf", mime="application/pdf")
+
         card_close()
 
 
@@ -831,113 +916,7 @@ if role == "operador":
 # SUPERVISOR
 # =========================
 else:
-    if page == "Pendientes":
-        card_open()
-        st.markdown("### Pendientes de aprobación")
-
-        dfp = list_pending_submissions()
-        if dfp.empty:
-            st.success("No hay pendientes 🎉")
-            card_close()
-            st.stop()
-
-        st.dataframe(dfp[["submission_id", "created_at", "date", "equipo", "operador_full_name", "estado_general", "status"]],
-                     use_container_width=True, hide_index=True)
-
-        st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
-        st.markdown("#### Revisar y aprobar")
-
-        sid = st.text_input("ID de submission", value=st.session_state.get("selected_submission", ""), placeholder="Ej: S2026...")
-        if st.button("Cargar detalle"):
-            st.session_state.selected_submission = sid.strip()
-            st.rerun()
-
-        sid = st.session_state.get("selected_submission", "").strip()
-        if sid:
-            sub, df_items, df_photos, appr = get_submission_detail(sid)
-            if not sub:
-                st.error("No existe ese submission.")
-                card_close()
-                st.stop()
-
-            st.markdown(f"**Equipo:** {sub.get('equipo','')}  •  **Operador:** {sub.get('operador_full_name','')}  •  **Estado:** {sub.get('estado_general','')}")
-            if sub.get("nota"):
-                st.caption(f"Nota operador: {sub.get('nota')}")
-
-            st.markdown("##### Ítems")
-            st.dataframe(df_items[["item_id", "item_text", "estado", "comentario"]] if not df_items.empty else pd.DataFrame(),
-                         use_container_width=True, hide_index=True)
-
-            st.markdown("##### Evidencias")
-            if df_photos.empty:
-                st.info("No hay fotos.")
-            else:
-                for _, prow in df_photos.iterrows():
-                    st.markdown(f"- **Item {prow.get('item_id')}** • {prow.get('filename')}")
-                    try:
-                        st.image(b64_to_bytes(prow.get("photo_b64","")), width=420)
-                    except Exception:
-                        st.warning("No pude mostrar una foto.")
-
-            st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
-            st.markdown("##### Aprobación supervisor")
-            conforme = st.selectbox("Conformidad", ["Conforme", "No conforme"], index=0)
-            observ = st.text_area("Observaciones (opcional)")
-            firma_sup_b64 = signature_input("Firma del supervisor", "firma_supervisor")
-
-            if st.button("Aprobar y generar PDF"):
-                if str(sub.get("status","")).upper() != "PENDIENTE":
-                    st.warning("Ya no está pendiente.")
-                    st.stop()
-                if not firma_sup_b64:
-                    st.error("Firma supervisor obligatoria.")
-                    st.stop()
-                approve_submission(sid, user, conforme, observ, firma_sup_b64)
-                st.success("Aprobado ✅ PDF generado.")
-                st.session_state.selected_submission = ""
-                st.rerun()
-
-        card_close()
-
-    elif page == "Reportes":
-        card_open()
-        st.markdown("### Reportes y Dashboard")
-
-        df = list_all_submissions()
-        if df.empty:
-            st.info("No hay datos aún.")
-            card_close()
-            st.stop()
-
-        c1, c2 = st.columns([1, 1])
-        with c1:
-            equipo = st.selectbox("Equipo", ["(Todos)"] + sorted(df["equipo"].dropna().unique().tolist()))
-        with c2:
-            status = st.selectbox("Estado del flujo", ["(Todos)", "PENDIENTE", "APROBADO"])
-
-        dff = df.copy()
-        if equipo != "(Todos)":
-            dff = dff[dff["equipo"] == equipo]
-        if status != "(Todos)":
-            dff = dff[dff["status"].astype(str).str.upper() == status]
-
-        total = len(dff)
-        aprob = int((dff["status"].astype(str).str.upper() == "APROBADO").sum())
-        pend = int((dff["status"].astype(str).str.upper() == "PENDIENTE").sum())
-        fallas = int(dff["estado_general"].astype(str).str.lower().str.contains("falla").sum())
-
-        k1, k2, k3, k4 = st.columns(4)
-        k1.metric("Total", total)
-        k2.metric("Aprobados", aprob)
-        k3.metric("Pendientes", pend)
-        k4.metric("Con falla (general)", fallas)
-
-        st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
-        st.dataframe(dff[["submission_id", "date", "equipo", "operador_full_name", "estado_general", "status", "updated_at"]].head(300),
-                     use_container_width=True, hide_index=True)
-        card_close()
-
-    elif page == "Usuarios":
+    if page == "Usuarios":
         card_open()
         st.markdown("### Gestión de usuarios (Supervisor)")
 
@@ -986,7 +965,6 @@ else:
                     st.success("Usuario actualizado ✅")
                 else:
                     st.error("No pude actualizar (revisa la hoja users).")
-
             st.rerun()
 
         st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
@@ -1006,10 +984,110 @@ else:
 
         card_close()
 
+    elif page == "Pendientes":
+        card_open()
+        st.markdown("### Pendientes de aprobación")
+        dfp = list_pending_submissions()
+        if dfp.empty:
+            st.success("No hay pendientes 🎉")
+            card_close()
+            st.stop()
+
+        st.dataframe(dfp[["submission_id", "created_at", "date", "equipo", "operador_full_name", "estado_general", "status"]],
+                     use_container_width=True, hide_index=True)
+
+        st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
+        sid = st.text_input("ID de submission", value=st.session_state.get("selected_submission", ""), placeholder="Ej: S2026...")
+        if st.button("Cargar detalle"):
+            st.session_state.selected_submission = sid.strip()
+            st.rerun()
+
+        sid = st.session_state.get("selected_submission", "").strip()
+        if sid:
+            sub, df_items, df_photos, appr = get_submission_detail(sid)
+            if not sub:
+                st.error("No existe ese submission.")
+                card_close()
+                st.stop()
+
+            st.markdown(f"**Equipo:** {sub.get('equipo','')}  •  **Operador:** {sub.get('operador_full_name','')}  •  **Estado:** {sub.get('estado_general','')}")
+            if sub.get("nota"):
+                st.caption(f"Nota operador: {sub.get('nota')}")
+
+            st.markdown("##### Ítems")
+            st.dataframe(df_items[["item_id", "item_text", "estado", "comentario"]] if not df_items.empty else pd.DataFrame(),
+                         use_container_width=True, hide_index=True)
+
+            st.markdown("##### Evidencias")
+            if df_photos.empty:
+                st.info("No hay fotos.")
+            else:
+                for _, prow in df_photos.iterrows():
+                    st.markdown(f"- **Item {prow.get('item_id')}** • {prow.get('filename')}")
+                    try:
+                        st.image(b64_to_bytes(prow.get("photo_b64","")), width=420)
+                    except Exception:
+                        st.warning("No pude mostrar una foto.")
+
+            st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
+            conforme = st.selectbox("Conformidad", ["Conforme", "No conforme"], index=0)
+            observ = st.text_area("Observaciones (opcional)")
+            firma_sup_b64 = signature_input("Firma del supervisor", "firma_supervisor")
+
+            if st.button("Aprobar y generar PDF"):
+                if str(sub.get("status","")).upper() != "PENDIENTE":
+                    st.warning("Ya no está pendiente.")
+                    st.stop()
+                if not firma_sup_b64:
+                    st.error("Firma supervisor obligatoria.")
+                    st.stop()
+                approve_submission(sid, user, conforme, observ, firma_sup_b64)
+                st.success("Aprobado ✅ PDF generado.")
+                st.session_state.selected_submission = ""
+                st.rerun()
+
+        card_close()
+
+    elif page == "Reportes":
+        card_open()
+        st.markdown("### Reportes y Dashboard")
+        df = list_all_submissions()
+        if df.empty:
+            st.info("No hay datos aún.")
+            card_close()
+            st.stop()
+
+        c1, c2 = st.columns([1, 1])
+        with c1:
+            equipo = st.selectbox("Equipo", ["(Todos)"] + sorted(df["equipo"].dropna().unique().tolist()))
+        with c2:
+            status = st.selectbox("Estado del flujo", ["(Todos)", "PENDIENTE", "APROBADO"])
+
+        dff = df.copy()
+        if equipo != "(Todos)":
+            dff = dff[dff["equipo"] == equipo]
+        if status != "(Todos)":
+            dff = dff[dff["status"].astype(str).str.upper() == status]
+
+        total = len(dff)
+        aprob = int((dff["status"].astype(str).str.upper() == "APROBADO").sum())
+        pend = int((dff["status"].astype(str).str.upper() == "PENDIENTE").sum())
+        fallas = int(dff["estado_general"].astype(str).str.lower().str.contains("falla").sum())
+
+        k1, k2, k3, k4 = st.columns(4)
+        k1.metric("Total", total)
+        k2.metric("Aprobados", aprob)
+        k3.metric("Pendientes", pend)
+        k4.metric("Con falla (general)", fallas)
+
+        st.markdown('<div class="hr"></div>', unsafe_allow_html=True)
+        st.dataframe(dff[["submission_id", "date", "equipo", "operador_full_name", "estado_general", "status", "updated_at"]].head(300),
+                     use_container_width=True, hide_index=True)
+        card_close()
+
     elif page == "Export semanal":
         card_open()
         st.markdown("### Export semanal")
-
         c1, c2, c3 = st.columns([1, 1, 2])
         with c1:
             start = st.date_input("Desde", value=date.today() - timedelta(days=7))
@@ -1023,8 +1101,7 @@ else:
                 st.error("La fecha final no puede ser menor.")
                 st.stop()
             data = export_weekly_xlsx(start, end)
-            st.download_button("Descargar Excel",
-                               data=data,
+            st.download_button("Descargar Excel", data=data,
                                file_name=f"reporte_{start.isoformat()}_a_{end.isoformat()}.xlsx",
                                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         card_close()
