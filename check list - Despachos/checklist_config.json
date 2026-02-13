@@ -1,0 +1,1760 @@
+{
+  "equipment": [
+    {
+      "equipment_id": "MONTACARGA COMBUSTION 05",
+      "category": "MONTACARGA COMBUSTION",
+      "unit": "05",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Verificar el estado de los componentes de los montacargas Electricas marcando con una ( ü ) o una (X) según sea el estado"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "INSPECCION VISUAL Y SENSORIAL con el equipo apagado"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "INSPECCION DE FUNCIONAL con el equipo encendido"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "VISUALIZACION EN EL DISPLAY"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "cabina"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Nivel de carga de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de horometro"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Asiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de freno de estacionamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cinturón de seguridad"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "CONDUCCION ( DIRECCION DEL TIMON)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha adelante"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de tracción"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha Atrás"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de dirección"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Dirección ruedas traseras"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Tracción ruedas delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS (c/equipo apagado)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite de motor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua del radiador"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores ( freno,intermitente, direccionales)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite de transmisión"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Liquido de freno"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de servicio (pedal)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de estacionamiento (de manual)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite de caja y corona"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "OPERACIÓN DEL MASTIL (C/equipo encendido)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Mecanismo de Piston de elevación"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "LIMPIEZA Y CONSERVACIÓN DEL EQUIPO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Mecanismo de Piston de inclinación"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Mecanismo de Piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Engrase del mastil"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pulverizado de partes internas del equipo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Limpieza del equipo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Otros"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de los rodamientos"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACIONES :_______________________________________________________________________________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "_______________________________________________________________________________________________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "_______________________________________________________________________________________________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "_______________________________________________________________________________________________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "____________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/MONTACARGA COMBUSTION/CHECK LIST MONTACARGA COMBUSTIÓN #05.xlsx"
+    },
+    {
+      "equipment_id": "MONTACARGA ELECTRICO 08",
+      "category": "MONTACARGA ELECTRICO",
+      "unit": "08",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Verificar el estado de los componentes de los montacargas Electricas marcando con una ( ü ) o una (X) según sea el estado"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "INSPECCION VISUAL Y SENSORIAL CON EL EQUIPO APAGADO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "INSPECCION DE FUNCIONAL CON EL EQUIPO ENCENDIDO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "VISUALIZACION EN EL DISPLAY"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "cabina"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Nivel de carga de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de horometro"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Asiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de freno de estacionamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cinturón de seguridad"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "CONDUCCION ( DIRECCION DEL TIMON)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha adelante"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de tracción"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha Atrás"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de dirección"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Dirección ruedas traseras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Tracción ruedas delanteras"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS (c/equipo apagado)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores ( freno,intermitente, direccionales)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Liquido de freno"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de servicio (pedal)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite de corona"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de estacionamiento (de manual)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OPERACIÓN DEL MASTIL (C/equipo encendido)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "LIMPIEZA Y CONSERVACIÓN DEL EQUIPO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de elevación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Engrase del mastil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de desplazamiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pulverizado de partes internas del equipo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Limpieza del equipo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Otros"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de los rodamientos"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACIONES:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "las mangueras hidráulicas se dió solución al rose que tenía, pero continúa con un leve desgaste"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "entrega de la montacarga 8 ya hecho su mantenimiento 27 11 25"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "llanta trasera desgastada  y partidas rajadas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "se engraso 23-01-26"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "se le agregó agua destilada 07-02- 26.    2 galones"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "luces d freno posterior lado izquierdo esta quemao los focos 💡 29-12-25"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "____________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/MONTACARGA ELECTRICO/CHECK LIST MONTACARGA ELECTRICA #08.xlsx"
+    },
+    {
+      "equipment_id": "MONTACARGA ELECTRICO 07",
+      "category": "MONTACARGA ELECTRICO",
+      "unit": "07",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Verificar el estado de los componentes de los montacargas Electricas marcando con una ( ü ) o una (X) según sea el estado"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "INSPECCION VISUAL Y SENSORIAL CON EL EQUIPO APAGADO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "INSPECCION DE FUNCIONAL CON EL EQUIPO ENCENDIDO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "VISUALIZACION EN EL DISPLAY"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "cabina"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Nivel de carga de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de horometro"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Asiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de freno de estacionamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cinturón de seguridad"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "CONDUCCION ( DIRECCION DEL TIMON)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha adelante"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de tracción"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha Atrás"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de dirección"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Dirección ruedas traseras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Tracción ruedas delanteras"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS (c/equipo apagado)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores ( freno,intermitente, direccionales)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Liquido de freno"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de servicio (pedal)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite de corona"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de estacionamiento (de manual)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OPERACIÓN DEL MASTIL (C/equipo encendido)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "LIMPIEZA Y CONSERVACIÓN DEL EQUIPO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de elevación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Engrase del mastil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de desplazamiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pulverizado de partes internas del equipo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Limpieza del equipo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Otros"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de los rodamientos"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACIONES:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "se presto la montacarga a un área exterior (empresa del sr. Michael)....donde le dieron varios choques al equipo ..dañando parte de la pintura"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/MONTACARGA ELECTRICO/CHECK LIST MONTACARGA ELECTRICA #07.xlsx"
+    },
+    {
+      "equipment_id": "MONTACARGA ELECTRICO 11",
+      "category": "MONTACARGA ELECTRICO",
+      "unit": "11",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Verificar el estado de los componentes de los montacargas Electricas marcando con una ( ü ) o una (X) según sea el estado"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "INSPECCION VISUAL Y SENSORIAL CON EL EQUIPO APAGADO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "INSPECCION DE FUNCIONAL CON EL EQUIPO ENCENDIDO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "VISUALIZACION EN EL DISPLAY"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "cabina"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Nivel de carga de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de horometro"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Asiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Indicador de freno de estacionamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cinturón de seguridad"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "CONDUCCION ( DIRECCION DEL TIMON)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha adelante"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de tracción"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Marcha Atrás"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Llanta de dirección"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Dirección ruedas traseras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Tracción ruedas delanteras"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS (c/equipo apagado)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores ( freno,intermitente, direccionales)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Liquido de freno"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de servicio (pedal)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite de corona"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Freno de estacionamiento (de manual)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OPERACIÓN DEL MASTIL (C/equipo encendido)"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "LIMPIEZA Y CONSERVACIÓN DEL EQUIPO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de elevación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Engrase del mastil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Mecanismo de Piston de desplazamiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pulverizado de partes internas del equipo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Limpieza del equipo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Otros"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de los rodamientos"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACIONES:luces direccionamiento lado esquierdo no prenden"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "el día sábado enla descarga de nitrato se dobló un poco la reja de seguridad de carga en la noche del ocurrido se le informó al supervisor Miguel ..24.11.25"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/MONTACARGA ELECTRICO/CHECK LIST MONTACARGA ELECTRICA #11.xlsx"
+    },
+    {
+      "equipment_id": "TRANSPALETA 03",
+      "category": "TRANSPALETA",
+      "unit": "03",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "COMPONENTE"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "OBSERVACIONES"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "PANEL INDICADOR"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "RUEDA CENTRAL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "RUEDA DE APOYO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "RUEDA DE CARGA"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "LUBRICACION DE PUNTOS DE ENGRASE"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "MANUBRIO DE CONTROL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "BRAZO DE SEGURIDAD"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CLAXON"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "LUCES DELANTERAS"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVEL DE AGUA DESTILADA DE LA BATERIA"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CABLE DE ALIMENTACIÓN"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OTROS"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "llave del equipo rota"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "_______________________"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "_________________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE DEL SEGUIMIENTO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "V°B° JEFE INMEDITO"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/TRANSPALETA/CHECK LIST DE TRANSPALETA #03.xlsx"
+    },
+    {
+      "equipment_id": "TRANSPALETA 04",
+      "category": "TRANSPALETA",
+      "unit": "04",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "PANEL INDICADOR"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "RUEDA CENTRAL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "RUEDA DE APOYO"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "RUEDA DE CARGA"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "LUBRICACION DE PUNTOS DE ENGRASE"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "MANUBRIO DE CONTROL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "BRAZO DE SEGURIDAD"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CLAXON"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "LUCES DELANTERAS"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVEL DE AGUA DESTILADA DE LA BATERIA"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CABLE DE ALIMENTACION"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OTROS"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACIONES:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "de los cuatro botones de control de carga uno está sin funcionamiento"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "_________________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE DEL SEGUIMIENTO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "V°B° JEFE INMEDITO"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/TRANSPALETA/CHECK LIST DE TRANSPALETA #04.xlsx"
+    },
+    {
+      "equipment_id": "APILADOR 01",
+      "category": "APILADOR",
+      "unit": "01",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Panel visualizador (Display)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Palanca de mando (joystick)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de la camara"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de carga"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de apoyo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores, circulina"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las horquillas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "OPERACIÓN DEL MASTIL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Elevación al maximo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Inclinación al maximo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Desplazador lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CONSERVACION DEL EQUIPO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Engrasado del Mastil"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del carro porta horquilla retractil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pulverizado y limpieza del equipo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del porta horquillas tipo pantografo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACION:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "26/08 Se detecto fuga de aceite en parte del mástil."
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "9/10 Llanta de apoyo gastada lado lateral."
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "21/10 Se detecto ligero sonido en la parte del motor de la llanta central, ya se informó.  [ Posible falla sistema hidráulico se hará seguimiento]"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "21/11 Llanta de carga lado izquierdo se está pelando por ser delgado. [ Intervención pendiente]"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "___________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE DEL SEGUIMIENTO"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/APILADOR/CHECK LIST APILADORA #01.xlsx"
+    },
+    {
+      "equipment_id": "APILADOR 04",
+      "category": "APILADOR",
+      "unit": "04",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Panel visualizador (Display)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Palanca de mando (joystick)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de la camara"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de carga"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de apoyo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores, circulina"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las horquillas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "OPERACIÓN DEL MASTIL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Elevación al maximo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Inclinación al maximo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Desplazador lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CONSERVACION DEL EQUIPO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Engrasado del Mastil"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del carro porta horquilla retractil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pulverizado y limpieza del equipo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del porta horquillas tipo pantografo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACION:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "La grasa de las cadenas está de un color opaco, como óxido"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Se encontraron rayones en la parte trasera 03/02"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Se calibró la llanta direccional 14/10"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "___________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE DEL SEGUIMIENTO"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/APILADOR/CHECK LIST APILADORA #04.xlsx"
+    },
+    {
+      "equipment_id": "APILADOR 03",
+      "category": "APILADOR",
+      "unit": "03",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Panel visualizador (Display)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Palanca de mando (joystick)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de la camara"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de carga"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de apoyo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores, circulina"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las horquillas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "OPERACIÓN DEL MASTIL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Elevación al maximo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Inclinación al maximo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Desplazador lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CONSERVACION DEL EQUIPO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Engrasado del Mastil"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del carro porta horquilla retractil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pulverizado y limpieza del equipo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del porta horquillas tipo pantografo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACION:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "se encontro un golpe al lado derecho del apilador"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "___________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE DEL SEGUIMIENTO"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/APILADOR/CHECK LIST APILADORA #03.xlsx"
+    },
+    {
+      "equipment_id": "APILADOR 02",
+      "category": "APILADOR",
+      "unit": "02",
+      "items": [
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pintura"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Panel visualizador (Display)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Espejos"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Palanca de mando (joystick)"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Extintor"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de la camara"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda central"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Pedal de control"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de carga"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces delanteras"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Rueda de apoyo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Luces posteriores, circulina"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Seguro de uñas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Claxon/alarma de retroceso"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Cargador y conectores de la bateria"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las horquillas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "OPERACIÓN DEL MASTIL"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Estado de las cadenas"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Elevación al maximo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de elevacion central"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "NIVELES DE LIQUIDOS"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de elevacion lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Agua destilada de la bateria"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Inclinación al maximo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Aceite hidraulico"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de pistones de inclinación"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Desplazador lateral"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "CONSERVACION DEL EQUIPO"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del vastago de piston de desplazamiento"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Lubricación de los puntos de engrase"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado de las mangueras hidraulicas"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Engrasado del Mastil"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del carro porta horquilla retractil"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "Pulverizado y limpieza del equipo"
+        },
+        {
+          "section": "Inspección funcional",
+          "item": "Estado del porta horquillas tipo pantografo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "OBSERVACION:"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "se encontró golpes al lado derecho del apilador y el lado izquierdo"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "24/10 Se detecto fuga de aceite parte de mástil parte trasera."
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "___________________________________________"
+        },
+        {
+          "section": "Inspección visual y sensorial",
+          "item": "FIRMA DE RESPONSABLE DEL SEGUIMIENTO"
+        }
+      ],
+      "source_file": "/mnt/data/checklists/APILADOR/CHECK LIST APILADORA #02.xlsx"
+    }
+  ]
+}
